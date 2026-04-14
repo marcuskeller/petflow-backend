@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS pets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(30),
+    especie VARCHAR(30)
+)
