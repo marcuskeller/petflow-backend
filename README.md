@@ -40,3 +40,11 @@ Para executar as migrations insira este comando no seu terminal:
 ```bash
 php artisan migrate
 ```
+
+## Lista dos endpoints existentes
+
+Para listar os endpoints existentes no projeto, basta inserir o seguinte comando no terminal:
+
+```bash
+php artisan route:list --path=api
+```
