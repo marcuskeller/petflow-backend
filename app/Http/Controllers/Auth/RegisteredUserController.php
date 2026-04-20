@@ -2,38 +2,28 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\DTOs\Auth\RegisterDTO;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
+use App\UseCases\Auth\RegisterUserUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws ValidationException
-     */
+    private RegisterUserUseCase $registerUserUseCase;
+
+    public function __construct(RegisterUserUseCase $registerUserUseCase)
+    {
+        $this->registerUserUseCase = $registerUserUseCase;
+    }
+
     public function store(Request $request): Response
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $dto = RegisterDTO::fromRequest($request);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->string('password')),
-        ]);
-
-        event(new Registered($user));
+        $user = $this->registerUserUseCase->execute($dto);
 
         Auth::login($user);
 
