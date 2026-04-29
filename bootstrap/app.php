@@ -22,8 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => EnsureEmailIsVerified::class,
         ]);
 
-        //
+        $middleware->statefulApi();
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
     })->create();
