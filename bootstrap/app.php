@@ -26,4 +26,17 @@ return Application::configure(basePath: dirname(__DIR__))
 
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->shouldRenderJsonWhen(fn ($request, $e) => true);
+
+        $exceptions->render(function (Throwable $e) {
+            $status = 400;
+
+            if (method_exists($e, 'getStatusCode')) {
+                $status = $e->getStatusCode();
+            }
+
+            return response()->json([
+                'message' => $e->getMessage() ?: 'Erro interno',
+            ], $status);
+        });
     })->create();
