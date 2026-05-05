@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
 
         return response()->json([
             'user' => $user,
-            'message' => 'Usuário cadastrado com sucesso!'
+            'message' => 'Usuário cadastrado com sucesso!',
         ], 201);
     }
 }

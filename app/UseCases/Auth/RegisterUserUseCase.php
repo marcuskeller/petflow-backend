@@ -8,7 +8,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use InvalidArgumentException;
 
-class RegisterUserUseCase {
+class RegisterUserUseCase
+{
     public function execute(RegisterDTO $registerDTO): User
     {
         if (User::query()->where('email', $registerDTO->email)->exists()) {
@@ -16,8 +17,8 @@ class RegisterUserUseCase {
         }
 
         $user = User::query()->create([
-            'name'     => $registerDTO->name,
-            'email'    => $registerDTO->email,
+            'name' => $registerDTO->name,
+            'email' => $registerDTO->email,
             'password' => Hash::make($registerDTO->password),
         ]);
 

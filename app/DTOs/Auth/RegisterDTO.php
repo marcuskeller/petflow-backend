@@ -4,7 +4,8 @@ namespace App\DTOs\Auth;
 
 use Illuminate\Http\Request;
 
-readonly class RegisterDTO {
+readonly class RegisterDTO
+{
     public function __construct(
         public string $name,
         public string $email,
